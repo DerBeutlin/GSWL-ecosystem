@@ -12,7 +12,7 @@ except ImportError:
     sys.exit(1)
 
 CONFIG_FILE = './bankaccounts.yml'
-LEDGER_FILE = './csv2journal.txt'
+LEDGER_FILE = './csv2journal.ledger'
 RE_LEDGER_FST_LINE_TRANSACTION = re.compile('^[0-9]+')
 SHOW_DIFF = False
 

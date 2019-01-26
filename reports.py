@@ -11,7 +11,7 @@ import tty
 import termios
 import subprocess
 
-REPORT_FILE = 'reports.txt'
+REPORT_FILE = 'reports.ledger'
 TEMP_SCRIPT_FILE = '/tmp/.ledgerscript.sh'
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 COLOR_BLUE = '\\033[36m'

@@ -15,9 +15,9 @@ fi
 # --wide            : Cause the default register report to assume a wide screen.
 # --flat            : Do not shouw accounts in a hierarchical tree
 # --pager=less"
-LEDGERARGS="--pedantic --check-payees --price-db prices.txt --market --explicit"
-alias led="ledger -f main.txt ${LEDGERARGS}"
-alias ledp="ledger -f main.txt ${LEDGERARGS} --pager=less"
+LEDGERARGS="--pedantic --check-payees --price-db prices.ledger --market --explicit"
+alias led="ledger -f main.ledger ${LEDGERARGS}"
+alias ledp="ledger -f main.ledger ${LEDGERARGS} --pager=less"
 alias ledreports="${LEDGER_ECOSYSTEM_DIR}/reports.py"
 alias ledlm='led -p "last month"'
 alias ledplm='ledp -p "last month"'
@@ -52,7 +52,7 @@ fi
 # First Day Of Month x Months Ago (may be used for specific Ledger reports)
 
 function ledxact () {
-    FILE=misc.tmp.txt
+    FILE=misc.tmp.ledger
     #ledger xact 2004/4/9 viva food 11 tips 2.50
     X=$(led xact "$@")
     echo "$X"
@@ -89,7 +89,7 @@ function ledbalper () {
 }
 
 function listTmpFiles () {
-    echo "meta.txt $(ls ./tmp/${LAST_AMN}*.tmp) misc.tmp.txt" | tr '\n' ' '
+    echo "accounts.ledger commodities.ledger payees.ledger $(ls ./tmp/${LAST_AMN}*.tmp) misc.tmp.ledger" | tr '\n' ' '
 }
 
 function csvConvert () {
@@ -106,7 +106,7 @@ function ledplot () {
     # subfolder).
 
     # This script facilities plotting of a ledger register report.  If you
-    # use OS/X, and have AquaTerm installed, you will probably want to set
+    # use OS/X, and have AquaTerm installed,  qq qq you will probably want to set
     # LEDGER_TERM to "aqua".
     #
     # Examples of use:
@@ -128,15 +128,15 @@ plot \"-\" using 1:2 with lines
     gnuplot < $FILE
 }
 
-# Once all CSV files are converted AND misc.tmp.txt contains manually added
+# Once all CSV files are converted AND misc.tmp.ledger contains manually added
 # ledger journal entries, everything needs to be merged and appended to the
 # actual journal.
-ATMPFILE="/tmp/lmall.tmp.txt" # used to store all postings from all tmp text files
-DTMPFILE="/tmp/lmsorted.tmp.txt" # used to store the same as above, but sorted by date
+ATMPFILE="/tmp/lmall.tmp.ledger" # used to store all postings from all tmp text files
+DTMPFILE="/tmp/lmsorted.tmp.ledger" # used to store the same as above, but sorted by date
 # This alias merges all tmp Ledger files, sorts them by date, and appends them
-# to the main journal.txt:
+# to the main journal.ledger:
 #todo: include funzt nicht im subdir :/
-alias lmmake="cat \$(listTmpFiles) > $ATMPFILE && ledger $LEDGERARGS -f $ATMPFILE --sort 'd' print > $DTMPFILE && git checkout journal.txt && (echo ' '; cat $DTMPFILE) >> journal.txt && less $DTMPFILE && rm $ATMPFILE $DTMPFILE"
+alias lmmake="cat \$(listTmpFiles) > $ATMPFILE && ledger $LEDGERARGS -f $ATMPFILE --sort 'd' print > $DTMPFILE && git checkout journal.ledger && (echo ' '; cat $DTMPFILE) >> journal.ledger && less $DTMPFILE && rm $ATMPFILE $DTMPFILE"
 alias lmclean="rm ./tmp/*"
 
 # Source this file in the current working directory
