@@ -89,7 +89,7 @@ function ledbalper () {
 }
 
 function listTmpFiles () {
-    echo "accounts.ledger commodities.ledger payees.ledger $(ls ./tmp/${LAST_AMN}*.tmp) misc.tmp.ledger" | tr '\n' ' '
+    echo "accounts.ledger commodities.ledger payees.ledger $(ls ./tmp/*.tmp) misc.tmp.ledger" | tr '\n' ' '
 }
 
 function csvConvert () {

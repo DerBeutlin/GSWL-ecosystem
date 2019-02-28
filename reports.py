@@ -110,13 +110,13 @@ def main(argv=None):
     while True:
         show(reports[i])
         print('')
-        print('[#{}] h = previous report, l = next report, q = quit [h/l/q] ?'.
+        print('[#{}] p = previous report, n = next report, q = quit [h/l/q] ?'.
               format(i + 1))
         action = getchar()
         # TODO: get char of cursor left/up/right/down
-        if (action == 'h'):
+        if (action == 'p'):
             i = i - 1 if i > 0 else len(reports) - 1
-        elif (action == 'l'):
+        elif (action == 'n'):
             i = i + 1 if i < len(reports) - 1 else 0
         elif (action == 'q'):
             break
