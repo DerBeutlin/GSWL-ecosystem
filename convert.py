@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import re
 import sys
@@ -82,7 +82,7 @@ def main(argv=None):
     account_underscore = account_colon.replace(":", "___")
     csv_filename = argv[2]
     f = open(CONFIG_FILE, 'r')
-    cfg = yaml.load(f)
+    cfg = yaml.load(f,Loader=yaml.FullLoader)
     if account_underscore not in cfg:
         print("Cannot find accout {} in config file ({}).".
               format(account_colon, CONFIG_FILE))
@@ -115,7 +115,6 @@ def main(argv=None):
             with open(tmp_csv_filename, "w") as output_fh:
                 output_fh.write(acfg['convert_header'] + '\n')
                 for line in lines:
-                    # print(line)
                     output_fh.write(line)
 
         # Use Ledger to convert the modified CSV file.
@@ -125,7 +124,7 @@ def main(argv=None):
         cmd += ' --generated'  # pin automated transactions
         cmd += ' {}'.format(acfg['ledger_args'])
         cmd += ' | sed -e "s/\(^\s\+.*\s\+\)\([-0-9\.]\+\)$/\\1{}\\2/g"'.\
-            format(acfg['currency'].encode('utf8'))
+            format(acfg['currency'])
         try:
             cmd += ' | sed -e "s/Expenses:Unknown/{}/g"'.\
                 format(acfg['expenses_unknown'])
@@ -139,7 +138,7 @@ def main(argv=None):
         # For every trannsaction, add the correspinding CSV file line to the
         # generated journal file.
         new_lines = []
-        with open(tmp_journal_filename, 'a+') as fh:
+        with open(tmp_journal_filename, 'r') as fh:
             i = 0
             for line in fh.readlines():
                 new_lines.append(line)

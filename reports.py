@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+
 """
 Usage:
     reports.py [<file> [<report-num>]]
@@ -47,7 +48,7 @@ def makescript(expl, cmds):
     Make a helper script which eases usage of the ecosystem.
     """
     out = ""
-    out += '#!/bin/bash\n'
+    out += '#!/usr/bin/env bash\n'
     out += 'shopt -s expand_aliases\n'
     out += '. {}/alias\n'.format(THIS_DIR)
     expl = escape(expl)

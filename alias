@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LEDGER_ECOSYSTEM_DIR=$(dirname "$_") # needed for later
 if [[ "$_" == "" && ! -z $BASH ]] ; then
